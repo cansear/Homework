@@ -89,7 +89,7 @@ void CostOnlyReverse(int M, int N, char ReverseA[], char ReverseB[],float W[][12
 
 void Diff(char A[], char B[], int M, int N, float tb, float te, float W[][128])
 {
-    if (N = 0)
+    if (N == 0)
     {
         if (M > 0)
         {

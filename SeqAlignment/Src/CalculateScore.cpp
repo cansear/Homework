@@ -27,7 +27,7 @@ float Cost(int M, int N, char A[], char B[], float W[][128])
         C[i][0] = C[i-1][0] + h;
 
         // C = min(d, e, c) if j > 0 & i > 0
-        for(j = 1; j < N; ++i)
+        for(j = 1; j < N; ++j)
         {
             c = C[i-1][j-1] + W[A[i]][B[j]];
             d = C[i-1][j] + h;
