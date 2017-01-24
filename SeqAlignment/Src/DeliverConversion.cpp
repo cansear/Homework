@@ -3,8 +3,8 @@
 #include "define.h"
 
 
-float C[NMAX+1][NMAX+1];
-float D[NMAX+1][NMAX+1];
+float CC[NMAX+1][NMAX+1];
+float DD[NMAX+1][NMAX+1];
 float R[NMAX+1][NMAX+1];
 float S[NMAX+1][NMAX+1];
 
@@ -13,39 +13,39 @@ void DeliverConversion(char A[], char B[], int M, int N,float W[][128])
     Diff(A, B, M, N, g, g, W);
 }
 
-void CostOnlyForword(int M, int N, char A[], char B[], float W[][128], float initT)
+void CostOnlyForward(int M, int N, char A[], char B[], float W[][128], float initT)
 {
     int i, j;
     float c; // C(i, j-1)
     float e; // I(i, j-1)
     float t; // accumulate g
     float s; // C(i-1, j-1)
-    C[0][0] = 0.;
+    CC[0][0] = 0.;
     t = g;
     for (j = 1; j < N; ++j)
     {
         // initialize 1st row
         t += h;
-        C[0][j] = t;
-        D[0][j] = t + g;
+        CC[0][j] = t;
+        DD[0][j] = t + g;
     }
     t = initT;
     for (i = 1; i < M; ++i)
     {
         // initialize 1st column
-        s = C[i][0];
-        D[i][0] = C[i][0] = c = t = t + h;
+        s = CC[i][0];
+        DD[i][0] = CC[i][0] = c = t = t + h;
         e = t +g;
 
         // C = min(d, e, c) if j > 0 & i > 0
         for(j = 1; j < N; ++i)
         {
             e = MinValue(e, c+g) + h; // I(i,j) = min{e, c+g} +h
-            D[i][j] = MinValue(D[i-1][j], C[i-1][j] + g) + h;
-            float a1 = MinValue(D[i][j], e);
+            DD[i][j] = MinValue(DD[i-1][j], CC[i-1][j] + g) + h;
+            float a1 = MinValue(DD[i][j], e);
             float b1 = s + W[A[i]][B[j]];
             c = MinValue(a1, b1);
-            C[i][j] = s = c;
+            CC[i][j] = s = c;
         }
     }
 
@@ -207,8 +207,8 @@ void Diff(char A[], char B[], int M, int N, float tb, float te, float W[][128])
         bool isType1Optimal = false;
         for (jStar = 0; jStar < N; ++jStar)
         {
-            float type1Cost = C[iStar][jStar] + R[iStar][N - jStar];
-            float type2Cost = D[iStar][jStar] + S[iStar][N - jStar] - g;
+            float type1Cost = CC[iStar][jStar] + R[iStar][N - jStar];
+            float type2Cost = DD[iStar][jStar] + S[iStar][N - jStar] - g;
             if (type1Cost < type2Cost)
             {
                 isType1Optimal = true;
