@@ -11,3 +11,7 @@ c. DeliverConversion.cpp/~.h: Display positive match and
     conversion in linear space
 ##Examples:
 FASTA files for test
+##How to run the program:
+1. Put data files as FASTA format into /Examples folder
+2. If you are in /Release folder, run the command:
+	./main
